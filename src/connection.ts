@@ -62,8 +62,14 @@ class SofaConnection implements SofaArgs {
     public async start(): Promise<boolean> {
         // Create a N1QL Primary Index (but ignore if it exists)
         try {
-            await this.cluster.queryIndexes().createPrimaryIndex(bucketName, {ignoreExists: true});
-        } catch (e) {}
+            await this.cluster
+                .queryIndexes()
+                .createPrimaryIndex(this.bucketName, {ignoreIfExists: true});
+
+            return true;
+        } catch (e) {
+            throw e;
+        }
     }
 }
 
