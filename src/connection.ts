@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as couchbase from 'couchbase';
 
-interface SofaArgs {
+export interface SofaArgs {
     connectionString: string;
     bucketName: string;
     username: string;
     password: string;
 }
 
-class SofaConnection implements SofaArgs {
+export class SofaConnection implements SofaArgs {
     private static _instance: SofaConnection;
 
     bucket: Bucket = null;
