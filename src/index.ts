@@ -1,4 +1,6 @@
 import SofaConnection, {SofaArgs} from './connection';
+
+export * from './model';
 export * from './connection';
 
 /**

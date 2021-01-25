@@ -50,3 +50,5 @@ export class Model {
         return this.collection.replace(id, data);
     }
 }
+
+export default Model;
