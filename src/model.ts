@@ -1,4 +1,5 @@
 import SofaConnection from './connection';
+import {generateUUID} from './uuid';
 
 export class Model {
     collection: Collection;
@@ -13,6 +14,13 @@ export class Model {
         }
     }
 
+    /**
+     * getId
+     */
+    // public getId() {
+    //     return `${metadata.scopeName}--${metadata.collectionName}::${id}`;
+    // }
+
     /** Get this collection
      * getCollection
      */
@@ -23,8 +31,9 @@ export class Model {
     /**
      * create
      */
-    public create(data: any, key?: string) {
-        return this.collection.upsert(key, data);
+    public create(data: any): Promise<MutationResult> {
+        const id = generateUUID();
+        return this.collection.upsert(id, data);
     }
 
     /**
@@ -37,7 +46,7 @@ export class Model {
     /**
      * update
      */
-    public updateById(id: string, data: any) {
+    public updateById(id: string, data: any): Promise<MutationResult> {
         return this.collection.replace(id, data);
     }
 }
