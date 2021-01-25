@@ -6,6 +6,7 @@ interface CommonTypes {
     createdAt: Date;
     updatedAt?: Date;
     deleted?: Date;
+    _type: string; // type for models
 }
 
 export class Model {
@@ -36,6 +37,7 @@ export class Model {
         const createdData = {
             id,
             createdAt: new Date(),
+            _type: this.collectionName,
             ...data,
         };
 
@@ -76,6 +78,11 @@ export class Model {
             throw error;
         }
     }
+
+    // TODO
+    // findMany
+    // pagination
+    // 
 }
 
 export default Model;
