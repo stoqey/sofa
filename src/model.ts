@@ -1,6 +1,13 @@
 import SofaConnection from './connection';
 import {generateUUID} from './uuid';
 
+interface CommonTypes {
+    id: string;
+    createdAt: Date;
+    updatedAt?: Date;
+    deleted?: Date;
+}
+
 export class Model {
     collection: Collection;
     collectionName: string;
@@ -43,15 +50,31 @@ export class Model {
     /**
      * findById
      */
-    public findById(id: string): Promise<GetResult> {
-        return this.collection.get(id);
+    public async findById(id: string): Promise<any> {
+        try {
+            const data = await this.collection.get(id);
+            return data.content;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
      * update
      */
-    public updateById(id: string, data: any): Promise<MutationResult> {
-        return this.collection.replace(id, data);
+    public async updateById<T>(id: string, data: T): Promise<T> {
+        const updatedDocument = {
+            id,
+            updatedAt: new Date(),
+            ...data,
+        };
+
+        try {
+            await this.collection.replace(id, updatedDocument);
+            return updatedDocument;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 
