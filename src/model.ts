@@ -13,28 +13,31 @@ export class Model {
         }
     }
 
+    /** Get this collection
+     * getCollection
+     */
+    public getCollection(): Collection {
+        return this.collection;
+    }
+
     /**
      * create
      */
-    public create() {}
-
-    /**
-     * save
-     */
-    public save() {}
+    public create(data: any, key?: string) {
+        return this.collection.upsert(key, data);
+    }
 
     /**
      * findById
      */
-    public findById() {}
-
-    /**
-     * findMany
-     */
-    public findMany() {}
+    public findById(id: string): Promise<GetResult> {
+        return this.collection.get(id);
+    }
 
     /**
      * update
      */
-    public update() {}
+    public updateById(id: string, data: any) {
+        return this.collection.replace(id, data);
+    }
 }
