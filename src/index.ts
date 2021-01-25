@@ -7,8 +7,8 @@ export * from './connection';
  * Main function to start Sofa
  * @param args SofaArgs
  */
-export const startSofa = (args: SofaArgs): Promise<boolean> => {
+export const startSofa = async (args: SofaArgs): Promise<boolean> => {
     const sofa = SofaConnection.Instance;
-    sofa.init(args);
-    return sofa.start();
+    await sofa.init(args);
+    return await sofa.start();
 };

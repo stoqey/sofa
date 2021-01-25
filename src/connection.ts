@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as couchbase from 'couchbase';
+import couchbase from 'couchbase';
 
 export interface SofaArgs {
     connectionString: string;
@@ -29,7 +29,7 @@ export class SofaConnection implements SofaArgs {
     /**
      * start
      */
-    public init(args: SofaArgs): {bucket: Bucket; cluster: Cluster} {
+    public async init(args: SofaArgs): Promise<SofaConnection> {
         const {connectionString, password, username, bucketName = 'default'} = args;
 
         this.connectionString = connectionString;
@@ -37,8 +37,7 @@ export class SofaConnection implements SofaArgs {
         this.username = username;
         this.password = password;
 
-        // @ts-ignore
-        this.cluster = new couchbase.Cluster(connectionString, {
+        this.cluster = await couchbase.connect(connectionString, {
             username,
             password,
         });
@@ -50,10 +49,8 @@ export class SofaConnection implements SofaArgs {
     /**
      * getCollection
      */
-    public getCollection(collectionName?: string): Collection {
-        return collectionName
-            ? this.bucket.collection(collectionName)
-            : this.bucket.defaultCollection();
+    public getCollection(): Collection {
+        return this.bucket.defaultCollection();
     }
 
     /**
@@ -61,15 +58,20 @@ export class SofaConnection implements SofaArgs {
      */
     public async start(): Promise<boolean> {
         // Create a N1QL Primary Index (but ignore if it exists)
-        try {
-            await this.cluster
-                .queryIndexes()
-                .createPrimaryIndex(this.bucketName, {ignoreIfExists: true});
+        // try {
 
-            return true;
-        } catch (e) {
-            throw e;
-        }
+        //     // await this.cluster
+        //     //     .queryIndexes()
+        //     //     .createPrimaryIndex(this.bucketName, {ignoreIfExists: true});
+
+        //     return true;
+        // } catch (e) {
+        //     throw e;
+        // }
+        console.log('start');
+        return new Promise((resolve) => {
+            resolve(true);
+        });
     }
 }
 

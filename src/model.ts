@@ -7,19 +7,12 @@ export class Model {
     scope = '_default';
 
     constructor(name: string, scope?: string) {
-        this.collection = SofaConnection.Instance.getCollection(name);
+        this.collection = SofaConnection.Instance.getCollection();
         this.collectionName = name;
         if (scope) {
             this.scope = scope;
         }
     }
-
-    /**
-     * getId
-     */
-    // public getId() {
-    //     return `${metadata.scopeName}--${metadata.collectionName}::${id}`;
-    // }
 
     /** Get this collection
      * getCollection
@@ -31,9 +24,20 @@ export class Model {
     /**
      * create
      */
-    public create(data: any): Promise<MutationResult> {
+    public async create<T>(data: T): Promise<T> {
         const id = generateUUID();
-        return this.collection.upsert(id, data);
+        const createdData = {
+            id,
+            createdAt: new Date(),
+            ...data,
+        };
+
+        try {
+            await this.collection.upsert(id, createdData);
+            return createdData;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
