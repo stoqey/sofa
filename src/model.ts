@@ -79,8 +79,17 @@ export class Model {
         }
     }
 
+    public async delete(id: string): Promise<boolean> {
+        try {
+            await this.collection.remove(id);
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     // TODO
-    // findMany
+    // findMany a.k.a find
     // pagination
     // 
 }
