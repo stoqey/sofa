@@ -54,24 +54,10 @@ export class SofaConnection implements SofaArgs {
     }
 
     /**
-     * start
+     * shutdown cluster
      */
-    public async start(): Promise<boolean> {
-        // Create a N1QL Primary Index (but ignore if it exists)
-        // try {
-
-        //     // await this.cluster
-        //     //     .queryIndexes()
-        //     //     .createPrimaryIndex(this.bucketName, {ignoreIfExists: true});
-
-        //     return true;
-        // } catch (e) {
-        //     throw e;
-        // }
-        console.log('start');
-        return new Promise((resolve) => {
-            resolve(true);
-        });
+    public shutdown(): void {
+        return this.cluster.close();
     }
 }
 

@@ -16,29 +16,36 @@ before((done) => {
 
 let sampleData = null;
 
-describe('Sofa', () => {
-    it('should insert into couchbase', async () => {
-        const userModel = new Model('User');
+const model = new Model('User');
 
-        const createdData = await userModel.create({
+describe('Sofa', () => {
+
+
+    it('should insert into couchbase', async () => {
+        const created = await model.create({
             userId: 'ceddy',
             password: 'Fuck ottoman',
         });
 
-        console.log('sample data created', JSON.stringify(sampleData));
+        console.log('sample data created', JSON.stringify(created));
 
-        expect(createdData).to.not.null;
+        sampleData = created;
+        expect(created.id).to.not.null;
     })
 
-    // it('should get into couchbase', () => {
-        
-    // })
+    it('should get into couchbase', async () => {
+        const foundData = await model.findById(sampleData.id);
+        expect(foundData.id).to.be.equal(sampleData.id);
+    })
 
-    // it('should delete into couchbase', () => {
-        
-    // })
+    it('should update into couchbase', async () => {
+        const updatedData = await model.updateById(sampleData.id, { ...sampleData, someValiue: 'x' });
+        expect(updatedData.id).to.be.equal(sampleData.id);
+    })
 
-    // it('should update into couchbase', () => {
-        
-    // })
+    it('should delete into couchbase', async () => {
+        const deletedData = await model.delete(sampleData.id);
+        expect(deletedData).to.be.equal(true);
+    })
+
 })

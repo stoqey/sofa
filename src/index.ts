@@ -2,13 +2,16 @@ import SofaConnection, {SofaArgs} from './connection';
 
 export * from './model';
 export * from './connection';
+export * from './query';
 
 /**
  * Main function to start Sofa
- * @param args SofaArgs
+ * @param @interface SofaArgs
  */
 export const startSofa = async (args: SofaArgs): Promise<boolean> => {
     const sofa = SofaConnection.Instance;
     await sofa.init(args);
-    return await sofa.start();
+    return Promise.resolve(true);
 };
+
+export default startSofa;
