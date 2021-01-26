@@ -50,7 +50,7 @@ describe('Sofa', () => {
 
     it('should paginate into couchbase', async () => {
         const paginationData = await model.pagination({
-            select: ["id", "email", "phone","fullname"],
+            select: ["id","password","createdAt", "email", "phone","fullname"],
             where: { 
                 userId: { $eq: "ceddy" },
                 $or: [{ userId: { $eq: "ceddy" } }, { phone: 10 }],

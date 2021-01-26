@@ -44,7 +44,7 @@ export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
 
     try {
         const query = new Query(where, bucketName)
-            .select('*')
+            .select(select)
             .limit(limit)
             .offset(offset)
             .orderBy(orderBy)
@@ -55,7 +55,7 @@ export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
         const {rows} = await cluster.query(query);
 
         const completedRows = rows.map((r: any) => {
-            return convertDates(r[bucketName]);
+            return select === '*' ? convertDates(r[bucketName]) : convertDates(r);
         });
 
         return completedRows;
