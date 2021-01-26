@@ -49,11 +49,11 @@ export class Model {
         this.fresh();
         const id = generateUUID();
         const createdData = {
+            ...data,
             id,
             createdAt: new Date(),
             _type: this.collectionName,
             _scope: this.scope,
-            ...data,
         };
 
         try {
@@ -83,12 +83,36 @@ export class Model {
     public async updateById<T>(id: string, data: T): Promise<T> {
         this.fresh();
         const updatedDocument = {
+            ...data,
             id,
             updatedAt: new Date(),
-            ...data,
         };
 
         try {
+            await this.collection.replace(id, updatedDocument);
+            return updatedDocument;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * save
+     */
+    public async save<T>(data: T & {id: string}): Promise<T> {
+        this.fresh();
+
+        const id = data && data.id;
+
+        const updatedDocument = {
+            ...data,
+            updatedAt: new Date(),
+        };
+
+        try {
+            if (!id) {
+                throw new Error('document must have id');
+            }
             await this.collection.replace(id, updatedDocument);
             return updatedDocument;
         } catch (error) {
