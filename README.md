@@ -24,7 +24,7 @@ Sofa is a Couchbase ORM utility to mimic Mongoose
 ### Background
 After spending time on `node-ottoman` (a mongoose-couchbase wanna-be), i decided to use `couchbase` directly instead.
 
-You can think of this as a Big `F*CK YOU` to the `node-ottoman` team .
+You can think of this as a re-write to the `node-ottoman`.
 
 **For the time being let's just call it the Mongoose for Couchbase**
 
