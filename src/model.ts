@@ -1,4 +1,5 @@
 import SofaConnection from './connection';
+import {Pagination} from './pagination';
 import {generateUUID} from './uuid';
 
 export interface AutoModelFields {
@@ -105,9 +106,54 @@ export class Model {
         }
     }
 
-    // TODO
-    // findMany a.k.a find
-    // pagination
+    /**
+     * Pagination
+     *  
+        select = ['id', 'createdAt']
+        where = {
+         where: { owner: { $eq: "stoqey" }, _type: { $eq: "Trade" } },
+        },
+        page = 0,
+        limit = 10,
+        orderBy = { createdAt: "DESC" },
+    * @param args PaginationArgs
+    */
+    public async pagination({
+        select,
+        where,
+        orderBy,
+        limit,
+        page,
+        customQuery = {},
+    }: {
+        select?: any[] | string;
+        where?: any;
+        orderBy?: any;
+        limit?: number;
+        page?: number;
+        customQuery?: any; // can be $and or any other valid quries
+    }): Promise<any[]> {
+        // Where begins here
+        let whereEx = {_type: {$eq: this.collectionName}};
+
+        if (where) {
+            whereEx = {
+                ...whereEx,
+                ...where,
+            };
+        }
+
+        const bucketName = SofaConnection.Instance.bucketName;
+
+        return Pagination({
+            bucketName,
+            select,
+            where: {where: whereEx, ...customQuery},
+            limit,
+            page,
+            orderBy,
+        });
+    }
 }
 
 export default Model;
