@@ -116,6 +116,7 @@ export class Model {
             await this.collection.replace(id, updatedDocument);
             return updatedDocument;
         } catch (error) {
+            console.error(error);
             throw error;
         }
     }
