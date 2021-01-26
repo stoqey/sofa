@@ -42,8 +42,6 @@ export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
 
     const offset = page * limit;
 
-    console.log('query args', {select, limit, offset, orderBy, where, bucketName});
-
     try {
         const query = new Query(where, bucketName)
             .select(select)
