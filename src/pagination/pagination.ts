@@ -24,7 +24,7 @@ export interface PaginationArgs {
 export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
     const {
         bucketName = '_default',
-        select: ogSelected,
+        select: ogSelected = '*',
         where = {
             // where: {owner: {$eq: 'stoqey'}, _type: {$eq: 'Trade'}},
         },
@@ -49,6 +49,8 @@ export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
             .offset(offset)
             .orderBy(orderBy)
             .build();
+
+        console.log('query', query);
 
         const {rows} = await cluster.query(query);
 

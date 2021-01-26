@@ -48,6 +48,21 @@ describe('Sofa', () => {
         expect(deletedData).to.be.equal(true);
     })
 
+    it('should paginate into couchbase', async () => {
+        const paginationData = await model.pagination({
+            select: ["id", "email", "phone","fullname"],
+            where: { 
+                userId: { $eq: "ceddy" },
+                $or: [{ userId: { $eq: "ceddy" } }, { phone: 10 }],
+             },
+            limit: 100,
+            page: 0,
+        });
+
+        console.log('pagination data', paginationData);
+        expect(paginationData).to.be.not.empty
+    })
+
     it('should create query', async () => {
         const dbName = 'stq'
         const query = new Query({}, dbName).select('*').build();
