@@ -8,6 +8,10 @@ export interface SofaArgs {
     password: string;
 }
 
+/**
+ * SofaConnection class
+ * Only one SofaConnection can exist that's why it's a singleton
+ */
 export class SofaConnection implements SofaArgs {
     private static _instance: SofaConnection;
 
