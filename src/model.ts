@@ -91,7 +91,6 @@ export class Model {
     // TODO
     // findMany a.k.a find
     // pagination
-    // 
 }
 
 export default Model;
