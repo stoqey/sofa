@@ -24,7 +24,7 @@ export interface PaginationArgs {
 export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
     const {
         bucketName = '_default',
-        select: ogSelected = '*',
+        // select: ogSelected = '*',
         where = {
             // where: {owner: {$eq: 'stoqey'}, _type: {$eq: 'Trade'}},
         },
@@ -35,12 +35,14 @@ export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
 
     const cluster = SofaConnection.Instance.cluster;
 
-    let select = ogSelected;
+    let select = args.select || '*';
     if (Array.isArray(select)) {
         select = select.map((i) => ({$field: i}));
     }
 
     const offset = page * limit;
+
+    console.log('query args', {select, limit, offset, orderBy, where, bucketName});
 
     try {
         const query = new Query(where, bucketName)

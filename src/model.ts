@@ -158,6 +158,7 @@ export class Model {
         page?: number;
         customQuery?: any; // can be $and or any other valid quries
     }): Promise<any[]> {
+        this.fresh(); // refresh
         // Where begins here
         let whereEx = {_type: {$eq: this.collectionName}};
 
