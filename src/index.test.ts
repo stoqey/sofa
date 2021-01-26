@@ -1,7 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { startSofa, Model } from './index'
+import { startSofa, Model, Query } from './index'
 
 before((done) => {
     startSofa({
@@ -46,6 +46,15 @@ describe('Sofa', () => {
     it('should delete into couchbase', async () => {
         const deletedData = await model.delete(sampleData.id);
         expect(deletedData).to.be.equal(true);
+    })
+
+    it('should create query', async () => {
+        const dbName = 'stq'
+        const query = new Query({}, dbName).select('*').build();
+
+        console.log('query is', query);
+        
+        expect(query).to.be.not.null;
     })
 
 })
