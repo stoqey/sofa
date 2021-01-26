@@ -11,34 +11,34 @@ export type ResultExprType = '$raw' | '$element' | '$value';
  * List of aggregation functions.
  * */
 export type AggType =
-  | '$arrayAgg'
-  | '$avg'
-  | '$mean'
-  | '$count'
-  | '$countn'
-  | '$max'
-  | '$median'
-  | '$min'
-  | '$stddev'
-  | '$stddevPop'
-  | '$stddevSamp'
-  | '$sum'
-  | '$variance'
-  | '$variancePop'
-  | '$varianceSamp'
-  | '$varPop'
-  | '$varSamp';
+    | '$arrayAgg'
+    | '$avg'
+    | '$mean'
+    | '$count'
+    | '$countn'
+    | '$max'
+    | '$median'
+    | '$min'
+    | '$stddev'
+    | '$stddevPop'
+    | '$stddevSamp'
+    | '$sum'
+    | '$variance'
+    | '$variancePop'
+    | '$varianceSamp'
+    | '$varPop'
+    | '$varSamp';
 
 /**
  * List of Boolean comparison operators.
  * */
 export type ComparisonEmptyOperatorType =
-  | '$isNull'
-  | '$isNotNull'
-  | '$isMissing'
-  | '$isNotMissing'
-  | '$isValued'
-  | '$isNotValued';
+    | '$isNull'
+    | '$isNotNull'
+    | '$isMissing'
+    | '$isNotMissing'
+    | '$isValued'
+    | '$isNotValued';
 /**
  * List of Numeric comparison operators.
  * */
@@ -73,9 +73,9 @@ export type CollectionInWithinOperator = '$in' | '$within';
 export type CollectionSatisfiesOperator = '$satisfies';
 
 export interface CollectionInWithinOperatorValue {
-  search_expr: unknown;
-  target_expr: unknown;
-  $not?: boolean;
+    search_expr: unknown;
+    target_expr: unknown;
+    $not?: boolean;
 }
 
 /**
@@ -87,7 +87,7 @@ export interface CollectionInWithinOperatorValue {
  * ```
  * */
 export type CollectionInWithinOperatorType = {
-  [key in CollectionInWithinOperator]?: CollectionInWithinOperatorValue;
+    [key in CollectionInWithinOperator]?: CollectionInWithinOperatorValue;
 };
 
 /**
@@ -95,8 +95,8 @@ export type CollectionInWithinOperatorType = {
  *
  * */
 export interface CollectionExpressionType {
-  $expr: CollectionInWithinOperatorType[];
-  $satisfied: FieldWhereExpr;
+    $expr: CollectionInWithinOperatorType[];
+    $satisfied: FieldWhereExpr;
 }
 /**
  * Structure of the collection in within operator
@@ -107,7 +107,7 @@ export interface CollectionExpressionType {
  * ```
  * */
 export type CollectionSelectOperatorType = {
-  [key in CollectionSelectOperator]?: CollectionExpressionType;
+    [key in CollectionSelectOperator]?: CollectionExpressionType;
 };
 
 /**
@@ -120,11 +120,11 @@ export type CollectionSelectOperatorType = {
  *
  * */
 export type ComparisonWhereExpr = {
-  [key in
-    | ComparisonEmptyOperatorType
-    | ComparisonSingleOperatorType
-    | ComparisonMultipleOperatorType
-    | ComparisonSingleStringOperatorType]?: string | number | boolean | (number | string)[];
+    [key in
+        | ComparisonEmptyOperatorType
+        | ComparisonSingleOperatorType
+        | ComparisonMultipleOperatorType
+        | ComparisonSingleStringOperatorType]?: string | number | boolean | (number | string)[];
 };
 
 /**
@@ -136,7 +136,9 @@ export type ComparisonWhereExpr = {
  * ```
  *
  * */
-export type FieldWhereExpr = Record<string, string | number | boolean | ComparisonWhereExpr> | LogicalWhereExpr;
+export type FieldWhereExpr =
+    | Record<string, string | number | boolean | ComparisonWhereExpr>
+    | LogicalWhereExpr;
 
 /**
  * Structure of Logical WHERE expression
@@ -148,17 +150,17 @@ export type FieldWhereExpr = Record<string, string | number | boolean | Comparis
  *
  * */
 export type LogicalWhereExpr =
-  | {
-      [key in LogicalOperatorType]?: FieldWhereExpr[];
-    }
-  | {
-      [key: string]: FieldWhereExpr;
-    }
-  | {
-      [key: string]: unknown;
-    }
-  | CollectionSelectOperatorType
-  | CollectionInWithinOperatorType;
+    | {
+          [key in LogicalOperatorType]?: FieldWhereExpr[];
+      }
+    | {
+          [key: string]: FieldWhereExpr;
+      }
+    | {
+          [key: string]: unknown;
+      }
+    | CollectionSelectOperatorType
+    | CollectionInWithinOperatorType;
 
 /**
  * SELECT field structure
@@ -170,8 +172,8 @@ export type LogicalWhereExpr =
  *
  * */
 export interface IField {
-  name: string;
-  as?: string;
+    name: string;
+    as?: string;
 }
 /**
  * SELECT aggregation expression
@@ -184,7 +186,7 @@ export interface IField {
  * */
 
 export type ISelectAggType = {
-  [key in AggType]?: ISelectFieldType;
+    [key in AggType]?: ISelectFieldType;
 };
 
 /**
@@ -197,9 +199,9 @@ export type ISelectAggType = {
  *
  * */
 export interface ISelectFieldType {
-  $field: IField | string;
-  as?: string;
-  ro?: ReturnResultType;
+    $field: IField | string;
+    as?: string;
+    ro?: ReturnResultType;
 }
 
 /**
@@ -211,7 +213,7 @@ export interface ISelectFieldType {
  * ```
  *
  * */
-export type ISelectResultExprType = { [key in ResultExprType]?: ISelectAggType | ISelectFieldType };
+export type ISelectResultExprType = {[key in ResultExprType]?: ISelectAggType | ISelectFieldType};
 
 /**
  * SELECT result expression
@@ -223,7 +225,7 @@ export type ISelectResultExprType = { [key in ResultExprType]?: ISelectAggType |
  *
  * */
 export type ISelectReturnResultType = {
-  [key in ReturnResultType]?: ISelectResultExprType | ISelectAggType | ISelectFieldType;
+    [key in ReturnResultType]?: ISelectResultExprType | ISelectAggType | ISelectFieldType;
 };
 
 /**
@@ -235,35 +237,39 @@ export type ISelectReturnResultType = {
  * ```
  *
  * */
-export type ISelectType = ISelectReturnResultType | ISelectResultExprType | ISelectAggType | ISelectFieldType;
+export type ISelectType =
+    | ISelectReturnResultType
+    | ISelectResultExprType
+    | ISelectAggType
+    | ISelectFieldType;
 
 /**
  * LET expression
  * */
 export interface ILetExpr {
-  key: string;
-  value: unknown;
+    key: string;
+    value: unknown;
 }
 
 export interface IGroupBy {
-  expr: string;
-  as?: string;
+    expr: string;
+    as?: string;
 }
 
 /**
  * List of params to build a SELECT clause
  * */
 export interface IConditionExpr {
-  select?: ISelectType[] | string;
-  let?: ILetExpr[];
-  where?: LogicalWhereExpr;
-  orderBy?: Record<string, SortType>;
-  limit?: number;
-  offset?: number;
-  use?: string[];
-  groupBy?: IGroupBy[];
-  letting?: ILetExpr[];
-  having?: LogicalWhereExpr;
+    select?: ISelectType[] | string;
+    let?: ILetExpr[];
+    where?: LogicalWhereExpr;
+    orderBy?: Record<string, SortType>;
+    limit?: number;
+    offset?: number;
+    use?: string[];
+    groupBy?: IGroupBy[];
+    letting?: ILetExpr[];
+    having?: LogicalWhereExpr;
 }
 
 /**
@@ -275,15 +281,15 @@ export type IndexType = 'CREATE' | 'BUILD' | 'DROP' | 'CREATE PRIMARY';
  * Index ON clause types
  * */
 export interface IIndexOnParams {
-  name: string;
-  sort?: SortType;
+    name: string;
+    sort?: SortType;
 }
 
 /**
  * Index WITH clause
  * */
 export interface IIndexWithParams {
-  nodes?: string[];
-  defer_build?: boolean;
-  num_replica?: number;
+    nodes?: string[];
+    defer_build?: boolean;
+    num_replica?: number;
 }
