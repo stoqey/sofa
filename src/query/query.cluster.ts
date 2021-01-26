@@ -12,7 +12,7 @@ import SofaConnection from '../connection';
     const options = {parameters: ['airport', 'San Jose']};
  * @param options
  */
-export async function QueryCluster(query: string, options: any): Promise<QueryResult> {
+export async function QueryCluster(query: string, options?: any): Promise<QueryResult> {
     const cluster = SofaConnection.Instance.cluster;
     try {
         const result = await cluster.query(query, options);

@@ -21,11 +21,9 @@
 Sofa is a Couchbase ORM utility to mimic Mongoose 
 
 ### Background
-After spending time on `node-ottoman` (a mongoose-couchbase wanna-be), i decided to use `couchbase` directly instead.
+After spending time on `node-ottoman` (a mongoose-like for couchbase), i decided to use `couchbase` directly instead.
 
-You can think of this as a re-write to the `node-ottoman`.
-
-**For the time being let's just call it the Mongoose for Couchbase**
+You can think of this as a tiny re-write to the `node-ottoman`.
 
 
 ## 1. Install
@@ -45,7 +43,7 @@ import { startSofa } from '@stoqey/sofa';
  })
 ```
 
-## 3. Create a Model/Collection and start using it
+## 3. Create a Model and start using it
 
 ```ts
 import { Model } from '@stoqey/sofa';
@@ -56,7 +54,7 @@ const userModel = new Model('User');
 // Create document
 const created = await userModel.create({
     username: 'ceddy',
-    password: 'fuck-node-ottoman',
+    password: 'love couchbase',
 });
 
 // Find document
@@ -70,7 +68,55 @@ const deletedData = await userModel.delete(created.id);
 
 ```
 
-## 4. Query build
+## 4. Pagination
+
+All models come with a method for automatic pagination 
+```ts
+const paginationData = await model.pagination({
+    select: ["id", "email", "phone","fullname"],
+    where: { 
+        userId: { $eq: "ceddy" },
+        $or: [{ userId: { $eq: "ceddy" } }, { phone: 10 }],
+        },
+    limit: 100,
+    page: 0,
+});
+```
+
+which translates to this query 
+
+```sql
+SELECT * FROM `stq` WHERE _type="User" AND userId="ceddy" AND (userId="ceddy" OR phone=10) ORDER BY createdAt DESC LIMIT 100 OFFSET 0
+```
+
+
+Pagination results
+
+```js
+[
+  {
+    id: '209d3143-09b7-4b3d-bf7d-f0ccd3f98922',
+    updatedAt: 2021-01-26T01:51:43.218Z,
+    createdAt: 2021-01-26T01:51:43.210Z,
+    _type: 'User',
+    userId: 'ceddy',
+    password: 'love couchbase',
+    someValiue: 'x'
+  },
+  {
+    id: '1392e4f6-ae1e-4e01-b7d5-103bdd0e843f',
+    updatedAt: 2021-01-26T01:51:29.591Z,
+    createdAt: 2021-01-26T01:51:29.583Z,
+    _type: 'User',
+    userId: 'ceddy',
+    password: 'love couchbase',
+    someValiue: 'x'
+  }
+]
+```
+
+
+## 5. Custom queries & Query builder
 Query builder is inspired from node-ottoman, for more examples, please see https://v2.ottomanjs.com/guides/query-builder.html#query-builder
 
 ```ts
@@ -190,10 +236,20 @@ Which translates to
 SELECT COUNT(type) AS odm,MAX(amount) FROM `travel-sample` USE KEYS ['airlineR_8093','airlineR_8094'] LET amount_val = 10,size_val = 20 WHERE ((price > amount_val AND price IS NOT NULL) OR auto > 10 OR amount = 10) AND ((price2 > 1.99 AND price2 IS NOT NULL) AND ((price3 > 1.99 AND price3 IS NOT NULL) OR id = '20')) GROUP BY type AS sch LETTING amount_v2=10,size_v2=20 HAVING type LIKE "%hotel%" ORDER BY type = 'DESC' LIMIT 10 OFFSET 1
 ```
 
+
+### Running custom query on cluster
+
+```ts
+import { QueryCluster } from '@stoqey/sofa';
+
+const queryresults = await QueryCluster(queryBuilder);
+// queryresults = { rows: object[], meta: any}
+
+```
 ### Contributors needed 
 - Create automatic pagination ✅
 - Create indexes
-- Create static methods like `save`, `update`, `findMany` e.t.c
+- Create static methods for models like `save`, `update`, `findMany` e.t.c
 
 
 <img height="500px" src="./docs/sleeping.png"></img>
