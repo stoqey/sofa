@@ -1,4 +1,23 @@
-# Sofa - Couchbase ORM Utilities
+
+<p align="center">
+  <h1 align="center"> Sofa - Couchbase ORM Utilities </h1>
+</p>
+
+
+<div align="center">
+
+<img src="./docs/lovebase.png"></img>
+
+<div style="display: flex;justify-content:center;">
+
+<img alt="NPM" src="https://img.shields.io/npm/dt/@stoqey/sofa.svg"></img>
+ 
+
+</div>
+
+</div>
+
+# 
 
 Sofa is a Couchbase ORM utility to mimic Mongoose 
 
@@ -37,7 +56,7 @@ const userModel = new Model('User');
 
 // Create document
 const created = await userModel.create({
-    userId: 'ceddy',
+    username: 'ceddy',
     password: 'fuck-node-ottoman',
 });
 
@@ -58,4 +77,8 @@ const deletedData = await userModel.delete(created.id);
 - Create static methods like `save`, `update`, `findMany` e.t.c
 
 
-# Stoqey Inc
+<img src="./docs/sleeping.png"></img>
+
+<p align="center">
+  <h1 align="center"> Stoqey Inc </h1>
+</p>

@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
+    "docs/",
     "dist/",
     "register/",
     "LICENSE"
@@ -35,9 +36,12 @@
     "url": "git://github.com/stoqey/sofa.git"
   },
   "keywords": [
-    "graphql",
+    "orm",
+    "mongoose",
+    "couchbase",
+    "node-ottoman",
     "stoqey",
-    "algorithms",
+    "stoqey.com",
     "stocks"
   ],
   "author": {

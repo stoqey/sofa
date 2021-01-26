@@ -1,7 +1,7 @@
 import SofaConnection from './connection';
 import {generateUUID} from './uuid';
 
-interface CommonTypes {
+export interface AutoModelFields {
     id: string;
     createdAt: Date;
     updatedAt?: Date;
@@ -24,7 +24,9 @@ export class Model {
     }
 
     /**
-     * Refresh and get default collection from sofa
+     * Refresh and get default collection from SofaConnection
+     * Because SofaConnection is a singleton, sometimes it might be undefined depending when model was created
+     * So we have to call it from all model methods
      * to avoid error `Cannot read property 'defaultCollection' of null`
      */
     public fresh(): void {
@@ -42,7 +44,7 @@ export class Model {
     /**
      * create
      */
-    public async create<T>(data: T): Promise<T & CommonTypes> {
+    public async create<T>(data: T): Promise<T & AutoModelFields> {
         this.fresh();
         const id = generateUUID();
         const createdData = {
@@ -64,7 +66,7 @@ export class Model {
     /**
      * findById
      */
-    public async findById(id: string): Promise<any & CommonTypes> {
+    public async findById(id: string): Promise<any & AutoModelFields> {
         this.fresh();
         try {
             const data = await this.collection.get(id);
