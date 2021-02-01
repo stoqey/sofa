@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import couchbase from 'couchbase';
+import {Collection, Cluster, Bucket} from './couchbase';
 
 export interface SofaArgs {
     connectionString: string;
@@ -41,10 +42,10 @@ export class SofaConnection implements SofaArgs {
         this.username = username;
         this.password = password;
 
-        this.cluster = await couchbase.connect(connectionString, {
+        this.cluster = (await couchbase.connect(connectionString, {
             username,
             password,
-        });
+        })) as any;
         this.bucket = this.cluster.bucket(bucketName);
 
         return this;
