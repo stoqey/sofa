@@ -13,6 +13,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "types": [
       "node"
     ],
@@ -21,9 +22,10 @@
   },
   "include": [
     "src/**/*",
-    "types.d.ts",
+    "types.d.ts"
   ],
   "exclude": [
     "src/**/*test.ts",
+    "node_modules/couchbase"
   ]
 }
