@@ -47,8 +47,7 @@ export class SofaConnection implements SofaArgs {
             password,
         });
 
-        // @ts-ignore
-        this.cluster = cluster;
+        this.cluster = cluster as any;
         this.bucket = this.cluster.bucket(bucketName);
 
         return this;
@@ -59,6 +58,10 @@ export class SofaConnection implements SofaArgs {
      */
     public getCollection = (): Collection => {
         return this.bucket.defaultCollection();
+    };
+
+    public getCluster = (): Cluster => {
+        return this.cluster;
     };
 
     /**
