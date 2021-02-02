@@ -57,16 +57,16 @@ export class SofaConnection implements SofaArgs {
     /**
      * getCollection
      */
-    public getCollection(): Collection {
+    public getCollection = (): Collection => {
         return this.bucket.defaultCollection();
-    }
+    };
 
     /**
      * shutdown cluster
      */
-    public shutdown(): void {
+    public shutdown = (): void => {
         return this.cluster.close();
-    }
+    };
 }
 
 export default SofaConnection;
