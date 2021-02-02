@@ -34,7 +34,7 @@ export class SofaConnection implements SofaArgs {
     /**
      * start
      */
-    public async init(args: SofaArgs): Promise<SofaConnection> {
+    public init = async (args: SofaArgs): Promise<SofaConnection> => {
         const {connectionString, password, username, bucketName = 'default'} = args;
 
         this.connectionString = connectionString;
@@ -42,14 +42,17 @@ export class SofaConnection implements SofaArgs {
         this.username = username;
         this.password = password;
 
-        this.cluster = (await couchbase.connect(connectionString, {
+        const cluster = await couchbase.connect(connectionString, {
             username,
             password,
-        })) as any;
+        });
+
+        // @ts-ignore
+        this.cluster = cluster;
         this.bucket = this.cluster.bucket(bucketName);
 
         return this;
-    }
+    };
 
     /**
      * getCollection
