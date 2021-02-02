@@ -1,6 +1,7 @@
 import SofaConnection from './connection';
 import {Pagination} from './pagination';
 import {generateUUID} from './uuid';
+import {Collection} from './couchbase';
 
 export interface AutoModelFields {
     id: string;
