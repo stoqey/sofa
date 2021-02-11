@@ -2,6 +2,7 @@ import SofaConnection from './connection';
 import {Pagination} from './pagination';
 import {generateUUID} from './uuid';
 import {Collection} from './couchbase';
+import {parseSchema, SchemaTypes} from './utils/utils.schema';
 
 export interface AutoModelFields {
     id: string;
@@ -12,16 +13,30 @@ export interface AutoModelFields {
     _scope: string; // scope for collections
 }
 
+interface ModalOptions {
+    scope?: string;
+    schema?: Record<string, SchemaTypes>;
+}
+
 export class Model {
     collection: Collection;
     collectionName: string;
     scope = '_default';
+    schema: Record<string, SchemaTypes> = {
+        createdAt: 'date',
+        updatedAt: 'date',
+    };
 
-    constructor(name: string, scope?: string) {
+    constructor(name: string, options?: ModalOptions) {
         // this.collection = SofaConnection.Instance.getCollection();
         this.collectionName = name;
-        if (scope) {
-            this.scope = scope;
+        if (options) {
+            this.scope = (options && options.scope) || '_default';
+            this.schema = {
+                ...((options && options.schema) || {}),
+                createdAt: 'date',
+                updatedAt: 'date',
+            };
         }
     }
 
@@ -59,7 +74,7 @@ export class Model {
 
         try {
             await this.collection.upsert(id, createdData);
-            return createdData;
+            return parseSchema(this.schema, createdData);
         } catch (error) {
             throw error;
         }
@@ -72,7 +87,7 @@ export class Model {
         this.fresh();
         try {
             const data = await this.collection.get(id);
-            return data.content;
+            return parseSchema(this.schema, data.content);
         } catch (error) {
             throw error;
         }
@@ -91,7 +106,7 @@ export class Model {
 
         try {
             await this.collection.replace(id, updatedDocument);
-            return updatedDocument;
+            return parseSchema(this.schema, updatedDocument);
         } catch (error) {
             throw error;
         }
@@ -115,7 +130,7 @@ export class Model {
                 throw new Error('document must have id');
             }
             await this.collection.replace(id, updatedDocument);
-            return updatedDocument;
+            return parseSchema(this.schema, updatedDocument);
         } catch (error) {
             console.error(error);
             throw error;
@@ -172,7 +187,7 @@ export class Model {
 
         const bucketName = SofaConnection.Instance.bucketName;
 
-        return Pagination({
+        const rows = await Pagination({
             bucketName,
             select,
             where: {where: whereEx, ...customQuery},
@@ -180,6 +195,8 @@ export class Model {
             page,
             orderBy,
         });
+
+        return rows.map((r) => parseSchema(this.schema, r));
     }
 }
 

@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 
-import {startSofa, Model, Query, Cluster} from '..';
+import {startSofa, Model, Query, Cluster} from './index';
 
 before((done) => {
     startSofa({
@@ -18,7 +18,7 @@ before((done) => {
 
 let sampleData = null;
 
-const model = new Model('User');
+const model = new Model('User', { schema: { createdAt: 'date'} });
 
 describe('Sofa', () => {
     it('should insert into couchbase', async () => {

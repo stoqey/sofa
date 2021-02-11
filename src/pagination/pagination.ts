@@ -1,5 +1,4 @@
 import {Query} from '../query';
-import {convertDates} from '../utils/date';
 import SofaConnection from '../connection';
 
 export interface PaginationArgs {
@@ -55,7 +54,7 @@ export const Pagination = async (args: PaginationArgs): Promise<any[]> => {
         const {rows} = await cluster.query(query);
 
         const completedRows = rows.map((r: any) => {
-            return select === '*' ? convertDates(r[bucketName]) : convertDates(r);
+            return select === '*' ? r[bucketName] : r;
         });
 
         return completedRows;
