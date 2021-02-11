@@ -248,6 +248,7 @@ const queryresults = await QueryCluster(queryBuilder);
 ```
 ### Contributors needed 
 - Create automatic pagination ✅
+- Create Schema and validation/population ✅
 - Create indexes
 - Create static methods for models like `save`, `update`, `findMany` e.t.c
 
