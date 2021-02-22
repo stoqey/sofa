@@ -65,8 +65,8 @@ export class Model {
         this.fresh();
         const id = generateUUID();
         const createdData = {
+            id, // let id be overriden
             ...data,
-            id,
             createdAt: new Date(),
             _type: this.collectionName,
             _scope: this.scope,
