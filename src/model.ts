@@ -73,7 +73,7 @@ export class Model {
         };
 
         try {
-            await this.collection.upsert(id, createdData);
+            await this.collection.upsert(createdData.id, createdData);
             return parseSchema(this.schema, createdData);
         } catch (error) {
             throw error;
