@@ -122,6 +122,7 @@ export class Model {
 
         const updatedDocument = {
             ...data,
+            id, // id's must match
             updatedAt: new Date(),
         };
 
