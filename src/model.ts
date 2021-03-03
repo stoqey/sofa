@@ -124,6 +124,8 @@ export class Model {
             ...data,
             id, // id's must match
             updatedAt: new Date(),
+            _type: this.collectionName, // type and scope must be defined
+            _scope: this.scope,
         };
 
         try {
