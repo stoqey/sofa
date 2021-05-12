@@ -18,12 +18,7 @@
 </div>
 
 
-Sofa is a Couchbase ORM utility to mimic Mongoose 
-
-### Background
-After spending time on `node-ottoman` (a mongoose-like for couchbase), i decided to use `couchbase` directly instead.
-
-You can think of this as a tiny re-write to the `node-ottoman`.
+Sofa is a super simple Couchbase ORM utility
 
 
 ## 1. Install
