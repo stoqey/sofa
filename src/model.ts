@@ -3,6 +3,7 @@ import {Pagination} from './pagination';
 import {generateUUID} from './uuid';
 import {Collection} from './couchbase';
 import {parseSchema, SchemaTypes} from './utils/utils.schema';
+import {CustomQuery} from './search';
 
 export interface AutoModelFields {
     id: string;
@@ -199,6 +200,32 @@ export class Model {
             limit,
             page,
             orderBy,
+        });
+
+        return rows.map((r) => parseSchema(this.schema, r));
+    }
+
+    /**
+     * Run a custom query with model parsing
+     * @param { select, query }
+     * @returns
+     */
+    public async customQuery<T>({
+        select,
+        query,
+    }: {
+        select: any[] | string;
+        query: string;
+    }): Promise<T[]> {
+        this.fresh(); // refresh
+        // Where begins here
+
+        const bucketName = SofaConnection.Instance.bucketName;
+
+        const rows = await CustomQuery<T>({
+            bucketName,
+            select,
+            query,
         });
 
         return rows.map((r) => parseSchema(this.schema, r));
