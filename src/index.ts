@@ -4,6 +4,7 @@ import SofaConnection, {SofaArgs} from './connection';
 export * from './model';
 export * from './connection';
 export * from './query';
+export * from './search';
 export * from './pagination';
 
 /**
