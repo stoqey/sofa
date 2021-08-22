@@ -69,6 +69,7 @@ export class Model {
             id, // let id be overriden
             ...data,
             createdAt: new Date(),
+            updatedAt: new Date(), // same as created at
             _type: this.collectionName,
             _scope: this.scope,
         };
