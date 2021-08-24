@@ -231,6 +231,11 @@ export class Model {
 
         return rows.map((r) => parseSchema(this.schema, r));
     }
+
+    public parse<T>(data: T): Promise<T[]> {
+        this.fresh(); // refresh
+        return parseSchema(this.schema, data);
+    }
 }
 
 export default Model;
