@@ -232,7 +232,7 @@ export class Model {
         return rows.map((r) => parseSchema(this.schema, r));
     }
 
-    public parse<T>(data: T): Promise<T[]> {
+    public parse<T>(data: T): T {
         this.fresh(); // refresh
         return parseSchema(this.schema, data);
     }
