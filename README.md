@@ -6,7 +6,7 @@
 
 <div align="center">
 
-<img width="400px" src="./docs/lovebase.png"></img>
+<img width="400px" src="./docs/sofa.jpg"></img>
 
 <div style="display: flex;justify-content:center;">
 
