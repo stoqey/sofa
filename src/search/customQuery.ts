@@ -1,9 +1,14 @@
 import SofaConnection from '../connection';
 
 export interface CustomQueryArgs {
-    bucketName: string;
-    select?: any[] | string;
     query: any;
+    limit: number;
+    params: any;
+}
+
+export interface CustomQueryPagination {
+    hasNext: boolean;
+    params: any;
 }
 
 /**
@@ -13,23 +18,30 @@ export interface CustomQueryArgs {
     select = ["id", "owner"] || "*"
  * @param args PaginationArgs
  */
-export const CustomQuery = async <T>(args: CustomQueryArgs): Promise<T[]> => {
-    const {query, bucketName = '_default', select = '*'} = args;
+export const CustomQuery = async <T>(
+    args: CustomQueryArgs
+): Promise<[T[], CustomQueryPagination]> => {
+    const {query, limit, params} = args;
 
     const cluster = SofaConnection.Instance.cluster;
 
     try {
-        console.log('query', query);
+        console.log('-> ', query);
 
-        const {rows} = await cluster.query(query);
+        const {rows = []} = await cluster.query(query);
 
-        const completedRows: T[] = rows.map((r: any) => {
-            return select === '*' ? r[bucketName] : r;
-        });
+        const totalItems = rows.length;
 
-        return completedRows;
+        let hasNext = true;
+        if (totalItems >= limit) {
+            hasNext = true;
+        } else {
+            hasNext = false;
+        }
+
+        return [(rows as unknown) as T[], {params, hasNext}];
     } catch (error) {
         console.error('error running pagination', error);
-        return [];
+        return [[], {params, hasNext: false}];
     }
 };
