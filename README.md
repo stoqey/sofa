@@ -1,6 +1,6 @@
 
 <p align="center">
-  <h1 align="center"> Sofa - Couchbase ORM Utilities </h1>
+  <h1 align="center"> Sofa - Simple Couchbase ORM</h1>
 </p>
 
 
@@ -18,7 +18,7 @@
 </div>
 
 
-Sofa is a super simple Couchbase ORM utility
+Sofa is a super simple Couchbase ORM
 
 
 ## 1. Install
@@ -56,7 +56,7 @@ const created = await userModel.create({
 const foundData = await userModel.findById(created.id);
 
 // update document
-const updatedData = await userModel.updateById(created.id, { ...created, someValiue: 'x' });
+const updatedData = await userModel.updateById(created.id, { ...created, someValue: 'x' });
 
 // delete
 const deletedData = await userModel.delete(created.id);
@@ -95,8 +95,8 @@ Pagination results
     createdAt: 2021-01-26T01:51:43.210Z,
     _type: 'User',
     userId: 'ceddy',
-    password: 'love couchbase',
-    someValiue: 'x'
+    password: '...',
+    someValue: 'x'
   },
   {
     id: '1392e4f6-ae1e-4e01-b7d5-103bdd0e843f',
@@ -104,15 +104,15 @@ Pagination results
     createdAt: 2021-01-26T01:51:29.583Z,
     _type: 'User',
     userId: 'ceddy',
-    password: 'love couchbase',
-    someValiue: 'x'
+    password: '...',
+    someValue: 'x'
   }
 ]
 ```
 
 
 ## 5. Custom queries & Query builder
-Query builder is inspired from node-ottoman, for more examples, please see https://v2.ottomanjs.com/guides/query-builder.html#query-builder
+Query builder is inspired from node-ottoman, for more examples, please see https://ottomanjs.com/guides/query-builder.html#query-builder
 
 ```ts
 import { Query } from '@stoqey/sofa';
@@ -244,8 +244,11 @@ const queryresults = await QueryCluster(queryBuilder);
 ### Contributors needed 
 - Create automatic pagination ✅
 - Create Schema and validation/population ✅
-- Create indexes
-- Create static methods for models like `save`, `update`, `findMany` e.t.c
+- Create static methods for models like `save`, `update`, `findMany` e.t.c ✅
+- Automated indexes
+- Geospatial queries
+- FTS queries
+
 
 
 <img height="500px" src="./docs/sleeping.png"></img>
