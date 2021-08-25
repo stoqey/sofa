@@ -41,7 +41,7 @@ export const CustomQuery = async <T>(
 
         return [(rows as unknown) as T[], {params, hasNext}];
     } catch (error) {
-        console.error('error running pagination', error);
+        console.error('error running CustomQuery', error);
         return [[], {params, hasNext: false}];
     }
 };
