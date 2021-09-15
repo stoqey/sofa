@@ -1,4 +1,3 @@
-export * from './couchbase';
 import SofaConnection, {SofaArgs} from './connection';
 
 export * from './model';

@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && ./node_modules/.bin/tsc --skipLibCheck",
     "test": "mocha src/*test.ts --exit",
     "prepublishOnly": "npm run build",
     "eslint": "eslint ./src --fix --ext=ts"
@@ -82,7 +82,7 @@
     "ts-node": "^9.1.1",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.2.4"
+    "typescript": "^4.4.3"
   },
   "peerDependencies": {
     "typescript": ">=2.0"

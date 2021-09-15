@@ -1,3 +1,4 @@
+import {QueryResult} from 'couchbase';
 import SofaConnection from '../connection';
 
 /**

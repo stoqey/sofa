@@ -1,7 +1,7 @@
 import SofaConnection from './connection';
 import {Pagination} from './pagination';
 import {generateUUID} from './uuid';
-import {Collection} from './couchbase';
+import {Collection} from 'couchbase';
 import {parseSchema, SchemaTypes} from './utils/utils.schema';
 import {CustomQuery, CustomQueryPagination} from './search';
 

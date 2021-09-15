@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as couchbase from 'couchbase';
-import {Collection, Cluster, Bucket} from './couchbase';
+import {Collection, Cluster, Bucket} from 'couchbase';
 
 export interface SofaArgs {
     connectionString: string;
@@ -67,7 +67,7 @@ export class SofaConnection implements SofaArgs {
     /**
      * shutdown cluster
      */
-    public shutdown = (): void => {
+    public shutdown = async (): Promise<void> => {
         return this.cluster.close();
     };
 }

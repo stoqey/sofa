@@ -20,12 +20,10 @@
     "resolveJsonModule": true,
     "downlevelIteration": true
   },
-  "include": [
-    "src/**/*",
-    "types.d.ts"
-  ],
   "exclude": [
     "src/**/*test.ts",
-    "node_modules/couchbase"
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*"
   ]
 }
