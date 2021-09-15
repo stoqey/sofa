@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import couchbase from 'couchbase';
+import * as couchbase from 'couchbase';
 import {Collection, Cluster, Bucket} from './couchbase';
 
 export interface SofaArgs {
