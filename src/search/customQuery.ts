@@ -39,7 +39,7 @@ export const CustomQuery = async <T>(
             hasNext = false;
         }
 
-        return [(rows as unknown) as T[], {params, hasNext}];
+        return [rows as unknown as T[], {params, hasNext}];
     } catch (error) {
         console.error('error running CustomQuery', error);
         return [[], {params, hasNext: false}];
